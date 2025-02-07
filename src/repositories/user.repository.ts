@@ -28,8 +28,9 @@ class UserRepository {
     return await User.create(dto);
   }
   public async getById(userId: string): Promise<IUser> {
-    return await User.findById(userId);
+    return await User.findById(userId).select("-password");
   }
+
   public async getByEmail(email: string): Promise<IUser> {
     return await User.findOne({ email });
   }

@@ -14,6 +14,7 @@ class UserController {
       next(e);
     }
   }
+
   public async getList(req: Request, res: Response, next: NextFunction) {
     try {
       const result = await userService.getList();
@@ -32,6 +33,7 @@ class UserController {
       next(e);
     }
   }
+
   public async updateMe(req: Request, res: Response, next: NextFunction) {
     try {
       const tokenPayLoad = req.res.locals.tokenPayload as ITokenPayload;
@@ -42,6 +44,7 @@ class UserController {
       next(e);
     }
   }
+
   public async deleteMe(req: Request, res: Response, next: NextFunction) {
     try {
       const tokenPayLoad = req.res.locals.tokenPayload as ITokenPayload;
@@ -51,14 +54,21 @@ class UserController {
       next(e);
     }
   }
-  public async getUserByIdOrEmail(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
+
+  public async getUserById(req: Request, res: Response, next: NextFunction) {
     try {
-      const { identifier } = req.params;
-      const result = await userService.getUserByIdOrEmail(identifier);
+      const { userId } = req.params;
+      const result = await userService.getUserById(userId);
+      res.status(200).json(result);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async getUserByEmail(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email } = req.params;
+      const result = await userService.getUserByEmail(email);
       res.status(200).json(result);
     } catch (e) {
       next(e);

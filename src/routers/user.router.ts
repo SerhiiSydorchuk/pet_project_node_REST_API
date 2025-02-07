@@ -22,9 +22,15 @@ router.put(
 router.delete("/me", authMiddleware.checkAccessToken, userController.deleteMe);
 
 router.get(
-  "/:identifier",
+  "/id/:userId",
   authMiddleware.checkAccessToken,
-  userController.getUserByIdOrEmail,
+  userController.getUserById,
+);
+
+router.get(
+  "/email/:email",
+  authMiddleware.checkAccessToken,
+  userController.getUserByEmail,
 );
 
 export const userRouter = router;

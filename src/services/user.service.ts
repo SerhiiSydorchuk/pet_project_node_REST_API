@@ -50,11 +50,12 @@ class UserService {
     }
     return user;
   }
-  public async getUserByIdOrEmail(identifier: string): Promise<IUser> {
-    if (identifier.includes("@")) {
-      return await userRepository.getByEmail(identifier);
+  public async getUserByEmail(email: string): Promise<IUser> {
+    const user = await userRepository.getByEmail(email);
+    if (!user) {
+      throw new ApiError("User not found", 404);
     }
-    return await userRepository.getById(identifier);
+    return user;
   }
 }
 
